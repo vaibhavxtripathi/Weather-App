@@ -69,10 +69,10 @@ Though, I have not implemented that here yet
 
 .search-button {
     position: absolute;
-    right: 30px;
+    right: 28px;
     background: none;
     border: none;
-    top: 31px;
+    top: 26px;
     color: rgb(255, 255, 255, 0.75);
     cursor: pointer;
 }
