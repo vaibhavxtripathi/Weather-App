@@ -390,7 +390,7 @@ async function updateHumidityWindChart(city) {
 async function getWeatherAnalysis(city) {
   try {
     const response = await fetch(
-      `http://127.0.0.1:5000/api/analysis?city=${city}`
+      `https://weather-app-emiw.onrender.com/api/analysis?city=${city}`
     );
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
