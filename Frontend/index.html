@@ -116,29 +116,40 @@
             </div>
         </section>
     </main>
-    <div id="analysis-report" style = "display: none">
-        <p id="prediction"></p>
-        <div class="slider">
-            <section class="graph1">
-                <canvas id="trend-graph" width="400" height="300"></canvas>
-            </section>
-            <section class="graph2">
-                <canvas id="min-max-graph" width="400" height="300"></canvas>
-            </section>
-            <section class="graph3">
-                <canvas id="line-graph" width="400" height="300"></canvas>
-            </section>
+    <div id="analysis-report" style="display: none">
+        <div class="analysis-header">
+            <h2>Weather Analysis</h2>
+            <p id="prediction" class="prediction-text"></p>
         </div>
-        <button class="previous" style="top: 50%; left: 40%; transform: translateY(-50%); z-index: 100; background: rgba(255, 255, 255, 0.541); border: none">
-            <span class="material-symbols-outlined">
-                arrow_back_ios
-                </span>
-        </button>
-        <button class="next" style="top: 50%; right: 72px; transform: translateY(-50%); z-index: 100; background: rgba(255, 255, 255, 0.541); border: none">
-            <span class="material-symbols-outlined">
-                arrow_forward_ios
-                </span>
-        </button>
+        <div class="chart-container">
+            <div class="slider">
+                <section class="graph1">
+                    <h3>Temperature Trend</h3>
+                    <canvas id="trend-graph"></canvas>
+                </section>
+                <section class="graph2">
+                    <h3>Temperature Variation</h3>
+                    <canvas id="min-max-graph"></canvas>
+                </section>
+                <section class="graph3">
+                    <h3>Humidity & Wind</h3>
+                    <canvas id="line-graph"></canvas>
+                </section>
+            </div>
+            <div class="chart-navigation">
+                <button class="previous">
+                    <span class="material-symbols-outlined">arrow_back_ios</span>
+                </button>
+                <div class="chart-dots">
+                    <span class="dot active"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+                <button class="next">
+                    <span class="material-symbols-outlined">arrow_forward_ios</span>
+                </button>
+            </div>
+        </div>
     </div>
 
 </body>

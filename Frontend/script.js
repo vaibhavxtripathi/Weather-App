@@ -152,34 +152,54 @@ function updateSection(section) {
 const slider = document.querySelector(".slider");
 let currentIndex = 0;
 const totalSlides = document.querySelectorAll(".slider section").length;
+const dots = document.querySelectorAll(".dot");
 
 function updateSlide() {
-  slider.style.transform = `translateX(-${currentIndex * 100}%)`; // Move slider horizontally
+    // Ensure the transform is applied correctly
+    const translateX = -currentIndex * 100;
+    slider.style.transform = `translateX(${translateX}%)`;
+    
+    // Update active dot
+    dots.forEach((dot, index) => {
+        dot.classList.toggle("active", index === currentIndex);
+    });
 }
 
 const nextBtn = document.querySelector(".next");
 const prvBtn = document.querySelector(".previous");
+
 // Next Button Click
 nextBtn.addEventListener("click", () => {
-  if (currentIndex < totalSlides - 1) {
-    currentIndex++;
-  } else {
-    currentIndex = 0; // Loop back to the first slide
-  }
-  updateSlide();
+    if (currentIndex < totalSlides - 1) {
+        currentIndex++;
+    } else {
+        currentIndex = 0;
+    }
+    updateSlide();
 });
 
 // Previous Button Click
 prvBtn.addEventListener("click", () => {
-  if (currentIndex > 0) {
-    currentIndex--;
-  } else {
-    currentIndex = totalSlides - 1; // Loop back to the last slide
-  }
-  updateSlide();
+    if (currentIndex > 0) {
+        currentIndex--;
+    } else {
+        currentIndex = totalSlides - 1;
+    }
+    updateSlide();
 });
 
-// nextBtn.addEventListener("click", (event)=>{
+// Dot navigation
+dots.forEach((dot, index) => {
+    dot.addEventListener("click", () => {
+        currentIndex = index;
+        updateSlide();
+    });
+});
+
+// Initialize the slider position
+updateSlide();
+
+//nextBtn.addEventListener("click", (event)=>{
 //     event.preventDefault();
 //     console.log(event);
 //     section1.style.display = 'none';
@@ -389,23 +409,28 @@ async function updateHumidityWindChart(city) {
 // Updated getWeatherAnalysis to dynamically update all charts
 async function getWeatherAnalysis(city) {
   try {
+    console.log("Fetching analysis for city:", city);
     const response = await fetch(
       `https://weather-app-emiw.onrender.com/api/analysis?city=${city}`
     );
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
     const data = await response.json();
+    console.log("Received analysis data:", data);
+
     if (data.error) {
+      console.log("Error in analysis data:", data.error);
       document.getElementById("analysis-report").style.display = "none";
       updateSection(notFoundSection);
     } else {
+      console.log("Displaying analysis report");
       document.getElementById("analysis-report").style.display = "block";
       predictionElement.textContent = `Predicted Temperature for 6th Day: ${data.prediction}`;
 
       // Update all charts
       updateChart(data.days, data.temperature, city); // Graph 1
-      updateTempVariationChart(city); // Graph 2
-      updateHumidityWindChart(city); // Graph 3
+      await updateTempVariationChart(city); // Graph 2
+      await updateHumidityWindChart(city); // Graph 3
     }
   } catch (error) {
     console.error("Error fetching analysis:", error);
